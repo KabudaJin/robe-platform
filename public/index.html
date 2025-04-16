@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <title>布料数据库</title>
   <script>
+    // 获取当前域名，适应不同环境
+    const API_BASE_URL = window.location.origin;
+    
     async function loadFabrics() {
-      const res = await fetch('http://localhost:3000/api/fabrics');
+      const res = await fetch(`${API_BASE_URL}/api/fabrics`);
       const data = await res.json();
       const table = document.getElementById('fabric-table');
       table.innerHTML = '<tr><th>名称</th><th>材质</th><th>颜色</th><th>克重</th><th>图片</th></tr>';
@@ -16,7 +19,7 @@
             <td>${f.material}</td>
             <td>${f.color}</td>
             <td>${f.weight}</td>
-            <td><img src="http://localhost:3000${f.image}" width="80"></td>
+            <td><img src="${API_BASE_URL}${f.image}" width="80"></td>
           </tr>`;
       });
     }
@@ -25,7 +28,7 @@
       event.preventDefault();
       const form = document.getElementById('fabric-form');
       const formData = new FormData(form);
-      await fetch('http://localhost:3000/api/fabrics', {
+      await fetch(`${API_BASE_URL}/api/fabrics`, {
         method: 'POST',
         body: formData
       });
